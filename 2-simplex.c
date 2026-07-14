@@ -135,19 +135,20 @@ void print_tableau(Rational **T, int *row_vars, int *col_vars, int num_rows, int
 }
 
 int main() {
-    int m;
-    if (scanf("%d", &m) != 1) return 0;
+    int m, n_orig;
+    // 1行目から「制約の数」と「変数の数」を両方読み込む
+    if (scanf("%d %d", &m, &n_orig) != 2) return 1;
 
     int max_vars = 1000;
     Rational *input_c = malloc(sizeof(Rational) * max_vars);
-    int n_orig = 0;
-    while (n_orig < max_vars) {
+    
+    // 指定された変数の数だけ目的関数の係数を読み込む
+    for (int j = 0; j < n_orig; j++) {
         long long val;
-        if (scanf("%lld", &val) != 1) break;
-        input_c[n_orig++] = make_rational(val, 1);
-        char ch = getchar();
-        if (ch == '\n' || ch == EOF) break;
+        if (scanf("%lld", &val) != 1) return 1;
+        input_c[j] = make_rational(val, 1);
     }
+
 
     Rational **input_A = malloc(sizeof(Rational*) * m);
     for (int i = 0; i < m; i++) {
